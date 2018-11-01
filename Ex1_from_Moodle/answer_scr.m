@@ -15,8 +15,7 @@ convMask_QAa(1:5, 1:5) = -0.04;
 convMask_QAa(3, 2:4) = 1/3;
 
 % generate an image with a 1x3 white patch
-image_name = 'Images\Images\Golf.jpg';
-I_QAa = imread(image_name);
+I_QAa = imread('Images\Images\Golf.jpg');
 imageSize = size(I_QAa);
 patch = zeros(5);
 patch(3, 2:4) = 255;
@@ -48,10 +47,36 @@ figure();
 imshow(Iresult_QAa, []);
 title('QAa: convolution results');
 
-% Q. b.
-% please fill in a similar fashion to QAa
+%% Q. b.
+% generate a mask
+convMask_QAb = ones(3) / 9;
 
-% Q. c.
+% convolve mask and image 
+Iresult_QAb = conv2(I_QAa, convMask_QAb);
+
+% find maximal value location (using code!)
+[maxLocation_y, maxLocation_x] = find(Iresult_QAb == max(Iresult_QAb(:)));
+maxLocation_x = maxLocation_x - (size(convMask_QAb, 1) - 1); % rescaling after conv
+maxLocation_y = maxLocation_y - (size(convMask_QAb, 2) - 1); % rescaling after conv
+
+% show generated image & mark maximal value
+figure();
+imshow(I_QAa);
+hold on;axis on;
+plot(maxLocation_x, maxLocation_y, '*r')
+title('QAb: original image with max value marked');
+
+% show mask used
+figure();
+imshow(convMask_QAb, []);
+title('QAb: masked used')
+
+% show convolution result
+figure();
+imshow(uint8(Iresult_QAb, []));
+title('QAb: convolution results');
+
+%% Q. c.
 % please fill in a similar fashion to QAa
 
 
