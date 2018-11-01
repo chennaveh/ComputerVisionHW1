@@ -8,15 +8,16 @@
 
 %% section A
 clc,clear, close all;
-% Q. a.
+I_QA = imread('Images\Images\Golf.jpg');
+imageSize = size(I_QA);
 
+% Q. a.
 % generate a mask
-convMask_QAa(1:5, 1:5) = -0.04;
+convMask_QAa(1:5, 1:5) = -0.01;
 convMask_QAa(3, 2:4) = 1/3;
 
 % generate an image with a 1x3 white patch
-I_QAa = imread('Images\Images\Golf.jpg');
-imageSize = size(I_QAa);
+I_QAa = I_QA;
 patch = zeros(5);
 patch(3, 2:4) = 255;
 randomPosition = [randi([1 (imageSize(1) - 4)]) randi([1 (imageSize(2) - 4)])]; % random position for patch
@@ -48,11 +49,13 @@ imshow(Iresult_QAa, []);
 title('QAa: convolution results');
 
 %% Q. b.
+
+I_QAb = I_QA;
 % generate a mask
 convMask_QAb = ones(3) / 9;
 
 % convolve mask and image 
-Iresult_QAb = conv2(I_QAa, convMask_QAb);
+Iresult_QAb = conv2(I_QAb, convMask_QAb);
 
 % find maximal value location (using code!)
 [maxLocation_y, maxLocation_x] = find(Iresult_QAb == max(Iresult_QAb(:)));
@@ -61,7 +64,7 @@ maxLocation_y = maxLocation_y - (size(convMask_QAb, 2) - 1); % rescaling after c
 
 % show generated image & mark maximal value
 figure();
-imshow(I_QAa);
+imshow(I_QAb);
 hold on;axis on;
 plot(maxLocation_x, maxLocation_y, '*r')
 title('QAb: original image with max value marked');
@@ -73,12 +76,48 @@ title('QAb: masked used')
 
 % show convolution result
 figure();
-imshow(uint8(Iresult_QAb, []));
+imshow(Iresult_QAb, []);
 title('QAb: convolution results');
 
 %% Q. c.
-% please fill in a similar fashion to QAa
 
+I_QAc = I_QA;
+% generate a mask
+convMask_QAc = zeros(5);
+convMask_QAc(3, 2:4) = 1 / 5;
+convMask_QAc(2:4, 3) = 1 / 5;
+
+% generate a patch image with a white '+' shape
+patch = zeros(5);
+patch(3, 2:4) = 255;
+patch(2:4, 3) = 255;
+randomPosition = [randi([1 (imageSize(1) - (size(convMask_QAc, 1) - 1))]) randi([1 (imageSize(2) - (size(convMask_QAc, 1) - 1))])]; % random position for patch
+I_QAc(randomPosition(1) : (randomPosition(1) + (size(convMask_QAc, 1) - 1)), randomPosition(2) : (randomPosition(2) + (size(convMask_QAc, 1) - 1))) = patch; % apply patch on image
+
+% convolve mask and image 
+Iresult_QAc = conv2(I_QAc, convMask_QAc);
+
+% find maximal value location (using code!)
+[maxLocation_y, maxLocation_x] = find(Iresult_QAc == max(Iresult_QAc(:)));
+maxLocation_x = maxLocation_x - (size(convMask_QAc, 1) - 1); % rescaling after conv
+maxLocation_y = maxLocation_y - (size(convMask_QAc, 2) - 1); % rescaling after conv
+
+% show generated image & mark maximal value
+figure();
+imshow(I_QAc);
+hold on;axis on;
+plot(maxLocation_x, maxLocation_y, '*r')
+title('QAac: original image with max value marked');
+
+% show mask used
+figure();
+imshow(convMask_QAc, []);
+title('QAc: masked used')
+
+% show convolution result
+figure();
+imshow(Iresult_QAc, []);
+title('QAc: convolution results');
 
 %% section B
 % after you write the functions uncomment and run:
