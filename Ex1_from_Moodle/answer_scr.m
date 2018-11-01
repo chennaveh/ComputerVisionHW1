@@ -7,27 +7,35 @@
 % Yael & Nir
 
 %% section A
-
+clc,clear, close all;
 % Q. a.
 
-% generate an image with a 1x3 white patch
-I_QAa = [];
-
 % generate a mask
-convMask_QAa = [];
+convMask_QAa(1:5, 1:5) = -0.04;
+convMask_QAa(3, 2:4) = 1/3;
+
+% generate an image with a 1x3 white patch
+image_name = 'Images\Images\Golf.jpg';
+I_QAa = imread(image_name);
+imageSize = size(I_QAa);
+patch = zeros(5);
+patch(3, 2:4) = 255;
+randomPosition = [randi([1 (imageSize(1) - 4)]) randi([1 (imageSize(2) - 4)])]; % random position for patch
+I_QAa(randomPosition(1) : (randomPosition(1) + (size(convMask_QAa, 1) - 1)), randomPosition(2) : (randomPosition(2) + (size(convMask_QAa, 1) - 1))) = patch; % apply patch on image
 
 % convolve mask and image 
-Iresult_QAa = [];
+Iresult_QAa = conv2(I_QAa, convMask_QAa);
 
 % find maximal value location (using code!)
-maxLocation_x = [];
-maxLocation_y = [];
+[maxLocation_y, maxLocation_x] = find(Iresult_QAa == max(Iresult_QAa(:)));
+maxLocation_x = maxLocation_x - (size(convMask_QAa, 1) - 1); % rescaling after conv
+maxLocation_y = maxLocation_y - (size(convMask_QAa, 2) - 1); % rescaling after conv
 
 % show generated image & mark maximal value
 figure();
 imshow(I_QAa);
-hold on;
-plot(maxLocation_x, max_location_y, '*r')
+hold on;axis on;
+plot(maxLocation_x, maxLocation_y, '*r')
 title('QAa: original image with max value marked');
 
 % show mask used
