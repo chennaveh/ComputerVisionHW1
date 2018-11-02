@@ -164,15 +164,55 @@ I_BC_edges = canny(imageName_QBC, sigmaCanny ,L_th, H_th);
 figure;
 subplot(1, 2, 1);
 imshow(I_BC, []);
-title('QBc: edges on Church  image');
+title('QBc: edges on My chosen image');
 subplot(1, 2, 2);
 imshow(I_BC_edges, []);
 title(['Lth = ' num2str(L_th) ', Hth = ' num2str(H_th) ', \sigma = ' num2str(sigmaCanny)]);
 
-% Q. BD 
-% please fill in a similar way
+%% Q. BD 
 
-% Q. BE
+% Church.jpg
+imageName_QBD = 'Images/Images/Church.jpg';
+I_BD = imread(imageName_QBD);
+L_th = 15;
+H_th = 20;
+sigmaCanny = 1;
+I_BD_edges = canny(imageName_QBD, sigmaCanny ,L_th, H_th);
+% show results
+figure;
+subplot(1, 2, 1);
+imshow(I_BD, []);
+title('QBd: edges on Church image');
+subplot(1, 2, 2);
+imshow(I_BD_edges, []);
+title(['Lth = ' num2str(L_th) ', Hth = ' num2str(H_th) ', \sigma = ' num2str(sigmaCanny)]);
+
+% Nuns.jpg
+imageName_QBD = 'Images/Images/Nuns.jpg';
+I_BD = imread(imageName_QBD);
+I_BD_edges = canny(imageName_QBD, sigmaCanny ,L_th, H_th);
+% show results
+figure;
+subplot(1, 2, 1);
+imshow(I_BD, []);
+title('QBd: edges on Nuns image');
+subplot(1, 2, 2);
+imshow(I_BD_edges, []);
+title(['Lth = ' num2str(L_th) ', Hth = ' num2str(H_th) ', \sigma = ' num2str(sigmaCanny)]);
+
+% Golf.jpg
+imageName_QBD = 'Images/Images/Golf.jpg';
+I_BD = imread(imageName_QBD);
+I_BD_edges = canny(imageName_QBD, sigmaCanny ,L_th, H_th);
+% show results
+figure;
+subplot(1, 2, 1);
+imshow(I_BD, []);
+title('QBd: edges on Golf image');
+subplot(1, 2, 2);
+imshow(I_BD_edges, []);
+title(['Lth = ' num2str(L_th) ', Hth = ' num2str(H_th) ', \sigma = ' num2str(sigmaCanny)]);
+%% Q. BE
 % please fill
 
 %% section C
