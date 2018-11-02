@@ -121,29 +121,31 @@ title('QAc: convolution results');
 
 %% section B
 % after you write the functions uncomment and run:
-close all;
-file_name = 'Images\Images\Nuns.jpg';
-edges_im = canny(file_name, 3, 10, 18);
-figure(); imshow(edges_im); title('final');
+close all;close all; clc
+% file_name = 'Images\Images\Nuns.jpg';
+% edges_im = canny(file_name, 3, 10, 18);
+% figure(); imshow(edges_im); title('final');
+
 % Q. BB.
-
 % generate a synthetic image to test your canny edge detector
-%im_test = createSyntheticImage_QBb();
-%im_test_name = 'QBb_imageForCanny.jpg';
-%imwrite(im_test, im_test_name);
+im_test = createSyntheticImage_QBb();
+% imshow(im_test);
 
-L_th = [1];
-H_th = [2];
-sigmaCanny = [3];
+im_test_name = 'QBb_imageForCanny.jpg';
+imwrite(im_test, im_test_name);
 
-%im_test_edges = canny(im_test_name, sigmaCanny ,L_th, H_th);
-% figure;
-% subplot(1, 2, 1);
-% imshow(im_test, []);
-% title('QBb: edges on synthetic  image');
-% subplot(1, 2, 2);
-% imshow(im_test_edges, []);
-% title(['Lth = ' num2str(L_th) ', Hth = ' num2str(H_th) ', \sigma = ' num2str(sigmaCanny)]);
+L_th = 10;
+H_th = 18;
+sigmaCanny = 3;
+
+im_test_edges = canny(im_test_name, sigmaCanny ,L_th, H_th);
+figure;
+subplot(1, 2, 1);
+imshow(im_test, []);
+title('QBb: edges on synthetic  image');
+subplot(1, 2, 2);
+imshow(im_test_edges, []);
+title(['Lth = ' num2str(L_th) ', Hth = ' num2str(H_th) ', \sigma = ' num2str(sigmaCanny)]);
 
 % Q. BC
 
