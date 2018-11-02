@@ -147,27 +147,27 @@ subplot(1, 2, 2);
 imshow(im_test_edges, []);
 title(['Lth = ' num2str(L_th) ', Hth = ' num2str(H_th) ', \sigma = ' num2str(sigmaCanny)]);
 
-% Q. BC
+%% Q. BC
 
 % choose an image to run your edge detector on 
-imageName_QBC = [];
-%I_BC = imread(imageName_QBC);
-L_th = [];
-H_th = [];
-sigmaCanny = [];
+imageName_QBC = 'QBc_imageForCanny.jpg';
+I_BC = imread(imageName_QBC);
+L_th = 5;
+H_th = 10;
+sigmaCanny = 2;
 
 % run canny edge detector
-% I_BC_edges = canny(imageName, sigmaCanny ,L_th, H_th);
+I_BC_edges = canny(imageName_QBC, sigmaCanny ,L_th, H_th);
 
 % show results
 
-% figure;
-% subplot(1, 2, 1);
-% imshow(I_BC, []);
-% title('QBc: edges on Church  image');
-% subplot(1, 2, 2);
-% imshow(I_BC_edges, []);
-% title(['Lth = ' num2str(L_th) ', Hth = ' num2str(H_th) ', \sigma = ' num2str(sigmaCanny)]);
+figure;
+subplot(1, 2, 1);
+imshow(I_BC, []);
+title('QBc: edges on Church  image');
+subplot(1, 2, 2);
+imshow(I_BC_edges, []);
+title(['Lth = ' num2str(L_th) ', Hth = ' num2str(H_th) ', \sigma = ' num2str(sigmaCanny)]);
 
 % Q. BD 
 % please fill in a similar way
