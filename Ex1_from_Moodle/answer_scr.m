@@ -213,7 +213,41 @@ subplot(1, 2, 2);
 imshow(I_BD_edges, []);
 title(['Lth = ' num2str(L_th) ', Hth = ' num2str(H_th) ', \sigma = ' num2str(sigmaCanny)]);
 %% Q. BE
-% please fill
+
+% Exploring parameters
+imageName_QBD = 'Images/Images/Golf.jpg';
+I_BD = imread(imageName_QBD);
+
+% show results
+figure;
+subplot(2, 3, 1);
+imshow(I_BD, []);
+title('QBd: edges on Golf image');
+
+% set 1
+L_th = 15; H_th = 20; sigmaCanny = 6;
+I_BD_edges = canny(imageName_QBD, sigmaCanny ,L_th, H_th);
+subplot(2, 3, 2); imshow(I_BD_edges, []); title(['Lth = ' num2str(L_th) ', Hth = ' num2str(H_th) ', \sigma = ' num2str(sigmaCanny)]);
+
+% set 2
+L_th = 15; H_th = 20; sigmaCanny = 12;
+I_BD_edges = canny(imageName_QBD, sigmaCanny ,L_th, H_th);
+subplot(2, 3, 3); imshow(I_BD_edges, []); title(['Lth = ' num2str(L_th) ', Hth = ' num2str(H_th) ', \sigma = ' num2str(sigmaCanny)]);
+
+% set 3
+L_th = 70; H_th = 60; sigmaCanny = 1;
+I_BD_edges = canny(imageName_QBD, sigmaCanny ,L_th, H_th);
+subplot(2, 3, 4); imshow(I_BD_edges, []); title(['Lth = ' num2str(L_th) ', Hth = ' num2str(H_th) ', \sigma = ' num2str(sigmaCanny)]);
+
+% set 4
+L_th = 1; H_th = 60; sigmaCanny = 1;
+I_BD_edges = canny(imageName_QBD, sigmaCanny ,L_th, H_th);
+subplot(2, 3, 5); imshow(I_BD_edges, []); title(['Lth = ' num2str(L_th) ', Hth = ' num2str(H_th) ', \sigma = ' num2str(sigmaCanny)]);
+
+% set 5
+L_th = 1; H_th = 20; sigmaCanny = 1;
+I_BD_edges = canny(imageName_QBD, sigmaCanny ,L_th, H_th);
+subplot(2, 3, 6); imshow(I_BD_edges, []); title(['Lth = ' num2str(L_th) ', Hth = ' num2str(H_th) ', \sigma = ' num2str(sigmaCanny)]);
 
 %% section C
 
