@@ -24,12 +24,13 @@ randomPosition = [randi([1 (imageSize(1) - 4)]) randi([1 (imageSize(2) - 4)])]; 
 I_QAa(randomPosition(1) : (randomPosition(1) + (size(convMask_QAa, 1) - 1)), randomPosition(2) : (randomPosition(2) + (size(convMask_QAa, 1) - 1))) = patch; % apply patch on image
 
 % convolve mask and image 
-Iresult_QAa = conv2(I_QAa, convMask_QAa);
+Iresult_QAa = conv2(I_QAa, convMask_QAa,'same');% she asked to use 'same'
 
 % find maximal value location (using code!)
 [maxLocation_y, maxLocation_x] = find(Iresult_QAa == max(Iresult_QAa(:)));
-maxLocation_x = maxLocation_x - (size(convMask_QAa, 1) - 1); % rescaling after conv
-maxLocation_y = maxLocation_y - (size(convMask_QAa, 2) - 1); % rescaling after conv
+%if we use 'same' there is no need for correction of the location
+%maxLocation_x = maxLocation_x - (size(convMask_QAa, 1) - 1); % rescaling after conv
+%maxLocation_y = maxLocation_y - (size(convMask_QAa, 2) - 1); % rescaling after conv
 
 % show generated image & mark maximal value
 figure();
@@ -55,12 +56,12 @@ I_QAb = I_QA;
 convMask_QAb = ones(3) / 9;
 
 % convolve mask and image 
-Iresult_QAb = conv2(I_QAb, convMask_QAb);
+Iresult_QAb = conv2(I_QAb, convMask_QAb,'same');
 
 % find maximal value location (using code!)
 [maxLocation_y, maxLocation_x] = find(Iresult_QAb == max(Iresult_QAb(:)));
-maxLocation_x = maxLocation_x - (size(convMask_QAb, 1) - 1); % rescaling after conv
-maxLocation_y = maxLocation_y - (size(convMask_QAb, 2) - 1); % rescaling after conv
+%maxLocation_x = maxLocation_x - (size(convMask_QAb, 1) - 1); % rescaling after conv
+%maxLocation_y = maxLocation_y - (size(convMask_QAb, 2) - 1); % rescaling after conv
 
 % show generated image & mark maximal value
 figure();
@@ -95,12 +96,12 @@ randomPosition = [randi([1 (imageSize(1) - (size(convMask_QAc, 1) - 1))]) randi(
 I_QAc(randomPosition(1) : (randomPosition(1) + (size(convMask_QAc, 1) - 1)), randomPosition(2) : (randomPosition(2) + (size(convMask_QAc, 1) - 1))) = patch; % apply patch on image
 
 % convolve mask and image 
-Iresult_QAc = conv2(I_QAc, convMask_QAc);
+Iresult_QAc = conv2(I_QAc, convMask_QAc,'same');
 
 % find maximal value location (using code!)
 [maxLocation_y, maxLocation_x] = find(Iresult_QAc == max(Iresult_QAc(:)));
-maxLocation_x = maxLocation_x - (size(convMask_QAc, 1) - 1); % rescaling after conv
-maxLocation_y = maxLocation_y - (size(convMask_QAc, 2) - 1); % rescaling after conv
+%maxLocation_x = maxLocation_x - (size(convMask_QAc, 1) - 1); % rescaling after conv
+%maxLocation_y = maxLocation_y - (size(convMask_QAc, 2) - 1); % rescaling after conv
 
 % show generated image & mark maximal value
 figure();
