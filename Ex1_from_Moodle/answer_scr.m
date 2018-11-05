@@ -121,11 +121,11 @@ imshow(Iresult_QAc, []);
 title('QAc: convolution results');
 
 %% section B
-% after you write the functions uncomment and run:
+% after you write the functions uncomment and run: ?????
 close all;close all; clc
-% file_name = 'Images\Images\Nuns.jpg';
-% edges_im = canny(file_name, 3, 10, 18);
-% figure(); imshow(edges_im); title('final');
+file_name = 'Images\Images\Nuns.jpg';
+edges_im = canny(file_name, 3, 10, 18);
+figure(); imshow(edges_im); title('final');
 
 % Q. BB.
 % generate a synthetic image to test your canny edge detector
