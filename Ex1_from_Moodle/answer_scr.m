@@ -258,16 +258,44 @@ subplot(2, 3, 6); imshow(I_BD_edges, []); title(['Lth = ' num2str(L_th) ', Hth =
 % I_test = imread(I_test_name);
 % I_test_GT = imread();
 
+imageName_QCG = 'Images/Images/Golf.jpg';
+I_CG_Golf = imread(imageName_QCG);
+
+imageName_QCG_GT= 'Images/Images/Golf_GT.jpg';
+I_CG_Golf_GT=imread(imageName_QCG_GT);
+figure; imshow(I_CG_Golf_GT,[]);
+
+IM_Test = [I_CG_Golf;I_CG_Golf_GT];
+
 % please replace val1/2/3/.. with your values
 % L_th = [val1 val2 val3];
 % H_th = [val4 val5 val6];
 % sigma = [val7 val8 val9];
 
-% test values effect
 
+% test values effect
+PRF_results = RunningTests(I_E,I_E_GD,L_th,H_th,sigma,'yes');
+
+% find the maximum F we got for wach combintation of vals
+WhichComb = find (PRF_results(:,3)==max(PRF_results(:,3)));
 
 % Q. CI
 % create a function and test results
+
+% test values effect
+PRF_results = RunningTests(I_E,I_E_GD,L_th,H_th,sigma,'no');
+
+% find the maximum F we got for wach combintation of vals
+WhichComb = find (PRF_results(:,3)==max(PRF_results(:,3)));
+
+
+%% section D
+
+
+
+
+
+
 
 
 
