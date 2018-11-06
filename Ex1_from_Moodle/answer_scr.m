@@ -53,7 +53,7 @@ title('QAa: convolution results');
 
 I_QAb = I_QA;
 % generate a mask
-convMask_QAb = ones(3) / 9;
+convMask_QAb = ones(3) / 9; % TODO - the mask should be 1X9
 
 % convolve mask and image 
 Iresult_QAb = conv2(I_QAb, convMask_QAb,'same');
@@ -253,28 +253,41 @@ subplot(2, 3, 6); imshow(I_BD_edges, []); title(['Lth = ' num2str(L_th) ', Hth =
 %% section C
 
 % Q. CG
-
-% I_test_name = [];
-% I_test = imread(I_test_name);
-% I_test_GT = imread();
-
+%Picture #1
 imageName_QCG = 'Images/Images/Golf.jpg';
-I_CG_Golf = imread(imageName_QCG);
+I(1,:,:) = imread(imageName_QCG);
+imageName_QCG_GT= 'Images/Images/Golf_GT.bmp';
+I_E_GT(1,:,:)=imread(imageName_QCG_GT);
 
-imageName_QCG_GT= 'Images/Images/Golf_GT.jpg';
-I_CG_Golf_GT=imread(imageName_QCG_GT);
-figure; imshow(I_CG_Golf_GT,[]);
+%Picture #2
+imageName_QCG = 'Images/Images/Church.jpg';
+I(2,:,:) = imread(imageName_QCG);
+imageName_QCG_GT= 'Images/Images/Church_GT.bmp';
+I_E_GT(2,:,:)=imread(imageName_QCG_GT);
 
-IM_Test = [I_CG_Golf;I_CG_Golf_GT];
+%Picture #3
+imageName_QCG = 'Images/Images/Nuns.jpg';
+I(3,:,:) = imread(imageName_QCG);
+imageName_QCG_GT= 'Images/Images/Nuns_GT.bmp';
+I_E_GT(3,:,:)=imread(imageName_QCG_GT);
+
+I_FileNames = {'Images/Images/Nuns.jpg','Images/Images/Church.jpg','Images/Images/Golf.jpg'};
+x=1;
+figure; 
+for i=1:3
+    subplot(2, 3, x); imshow(squeeze(I(i,:,:)), [])
+    subplot(2, 3, x+1); imshow(squeeze(I_E_GT(i,:,:)), [])
+    x=x+2;
+end
 
 % please replace val1/2/3/.. with your values
-% L_th = [val1 val2 val3];
-% H_th = [val4 val5 val6];
-% sigma = [val7 val8 val9];
+L_th = [1 15 70];
+H_th = [1 50 90];
+sigma = [1 6 12];
 
 
 % test values effect
-PRF_results = RunningTests(I_E,I_E_GD,L_th,H_th,sigma,'yes');
+PRF_results = RunningTests(I_FileNames,I_E_GT,L_th,H_th,sigma,'yes');
 
 % find the maximum F we got for wach combintation of vals
 WhichComb = find (PRF_results(:,3)==max(PRF_results(:,3)));
@@ -283,7 +296,7 @@ WhichComb = find (PRF_results(:,3)==max(PRF_results(:,3)));
 % create a function and test results
 
 % test values effect
-PRF_results = RunningTests(I_E,I_E_GD,L_th,H_th,sigma,'no');
+PRF_results = RunningTests(I_E,I_E_GD,L_th,H_th,sigma,'naive');
 
 % find the maximum F we got for wach combintation of vals
 WhichComb = find (PRF_results(:,3)==max(PRF_results(:,3)));
@@ -292,6 +305,23 @@ WhichComb = find (PRF_results(:,3)==max(PRF_results(:,3)));
 %% section D
 
 
+
+H_th = [1 50 90];
+x=1;
+PRF_results = zeros(size(H_th,2),3); %init a matrix (Num_Possibilits, 3)
+%collecting results on all posibilities
+for t=1:size(I,2)
+    for j=1:size(H_th,2)
+            edges = sobel(I{t},H_th(j));
+            if strcmpi(Naive,'naive')                   
+                [P,R,F]= evaluate_naive(edges,squeeze(I_E_GD(t,:,:)));
+            else
+                [P,R,F]= evaluate(edges,squeeze(I_E_GD(t,:,:))); 
+            end
+            PRF_results(x,:) = [P,R,F];
+            x=x+1;
+    end
+end
 
 
 

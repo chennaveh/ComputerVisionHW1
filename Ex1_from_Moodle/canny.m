@@ -8,8 +8,8 @@ G_dy = Deriv_Gauss_y(sigma, mask_size);
 
 % generate I_x, I_y
 I = imread(file_name);
-I_x = conv2(I, G_dx);
-I_y = conv2(I, G_dy);
+I_x = conv2(I, G_dx,'same');
+I_y = conv2(I, G_dy,'same');
 
 % generate G_orientation and G_magnitute
 G_magnitute = (I_x.^2 + I_y.^2).^0.5;

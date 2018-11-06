@@ -5,9 +5,9 @@ function [P,R,F] =evaluate(E,E_GT)
 
 
 
-P = sum(and(E,E_GT),'all')/sum(E); % How many selected items are relevent
-R = sum(and(E,E_GT),'all')/sum(GT); % How many relevent items are selected
-F =(2*P*R)/(P*R);
+P = sum(and(E,E_GT),'all')/sum(E,'all'); % How many selected items are relevent
+R = sum(and(E,E_GT),'all')/sum(E_GT,'all'); % How many relevent items are selected
+F =(2*P*R)/(P+R);
 
 
 end
