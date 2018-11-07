@@ -24,7 +24,7 @@ randomPosition = [randi([1 (imageSize(1) - 4)]) randi([1 (imageSize(2) - 4)])]; 
 I_QAa(randomPosition(1) : (randomPosition(1) + (size(convMask_QAa, 1) - 1)), randomPosition(2) : (randomPosition(2) + (size(convMask_QAa, 1) - 1))) = patch; % apply patch on image
 
 % convolve mask and image 
-Iresult_QAa = conv2(I_QAa, convMask_QAa,'same');% she asked to use 'same'
+Iresult_QAa = conv2(I_QAa, convMask_QAa,'same');%TODO -  she asked to use 'same'
 
 % find maximal value location (using code!)
 [maxLocation_y, maxLocation_x] = find(Iresult_QAa == max(Iresult_QAa(:)));
@@ -251,7 +251,8 @@ I_BD_edges = canny(imageName_QBD, sigmaCanny ,L_th, H_th);
 subplot(2, 3, 6); imshow(I_BD_edges, []); title(['Lth = ' num2str(L_th) ', Hth = ' num2str(H_th) ', \sigma = ' num2str(sigmaCanny)]);
 
 %% section C
-
+clear all;
+clc;
 % Q. CG
 %Picture #1
 imageName_QCG = 'Images/Images/Golf.jpg';
@@ -273,7 +274,7 @@ I_E_GT(3,:,:)=imread(imageName_QCG_GT);
 
 I_FileNames = {'Images/Images/Nuns.jpg','Images/Images/Church.jpg','Images/Images/Golf.jpg'};
 x=1;
-figure; 
+figure(99); 
 for i=1:3
     subplot(2, 3, x); imshow(squeeze(I(i,:,:)), [])
     subplot(2, 3, x+1); imshow(squeeze(I_E_GT(i,:,:)), [])
@@ -285,44 +286,47 @@ L_th = [1 15 70];
 H_th = [1 50 90];
 sigma = [1 6 12];
 
-
-% test values effect
-PRF_results = RunningTests(I_FileNames,I_E_GT,L_th,H_th,sigma,'yes');
-
-% find the maximum F we got for wach combintation of vals
-WhichComb = find (PRF_results(:,3)==max(PRF_results(:,3)));
+% test the values and display the images with the best results.
+%return a marix 81X3 with all results (27 - first pic, 28-54 sec pic, 55+
+%third one)
+PRF_results = RunningTests(I_FileNames,I_E_GT,L_th,H_th,sigma,'naive','canny');
 
 % Q. CI
 % create a function and test results
 
-% test values effect
-PRF_results = RunningTests(I_E,I_E_GD,L_th,H_th,sigma,'naive');
-
-% find the maximum F we got for wach combintation of vals
-WhichComb = find (PRF_results(:,3)==max(PRF_results(:,3)));
+% test values effect with imdilate
+PRF_results_with_imdilates = RunningTests(I_FileNames,I_E_GT,L_th,H_th,sigma,'imdilate','canny');
 
 
 %% section D
+clear all;
+clc;
 
+%Picture #1
+imageName_QCG_GT= 'Images/Images/Golf_GT.bmp';
+I_E_GT(1,:,:)=imread(imageName_QCG_GT);
 
+%Picture #2
+imageName_QCG_GT= 'Images/Images/Church_GT.bmp';
+I_E_GT(2,:,:)=imread(imageName_QCG_GT);
 
-H_th = [1 50 90];
-x=1;
-PRF_results = zeros(size(H_th,2),3); %init a matrix (Num_Possibilits, 3)
-%collecting results on all posibilities
-for t=1:size(I,2)
-    for j=1:size(H_th,2)
-            edges = sobel(I{t},H_th(j));
-            if strcmpi(Naive,'naive')                   
-                [P,R,F]= evaluate_naive(edges,squeeze(I_E_GD(t,:,:)));
-            else
-                [P,R,F]= evaluate(edges,squeeze(I_E_GD(t,:,:))); 
-            end
-            PRF_results(x,:) = [P,R,F];
-            x=x+1;
-    end
+%Picture #3
+imageName_QCG_GT= 'Images/Images/Nuns_GT.bmp';
+I_E_GT(3,:,:)=imread(imageName_QCG_GT);
+
+I_FileNames = {'Images/Images/Nuns.jpg','Images/Images/Church.jpg','Images/Images/Golf.jpg'};
+
+%run sobel on 3 images
+for i=1:3
+    edges = sobel(I_FileNames{i},50);
+    figure(i)
+    imshow(edges)
 end
 
+% Q. DL
+th = [50 100 200]; 
+%calculate P,R,F for all pictures for all th posibilities
+PRF_results = RunningTests(I_FileNames,I_E_GT,th,[1],[1],'naive','sobel');
 
 
 
