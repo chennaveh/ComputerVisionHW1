@@ -225,6 +225,23 @@ subplot(2, 3, 1);
 imshow(I_BD, []);
 title('QBd: edges on Golf image');
 
+
+
+%%%%%TODO - she wants to document the different paramerters this wey as
+%%%%%explained in the PDF:
+%% C.
+%% The sigma parameter affects the …
+%% This can be demonstrates by running the canny edge detector with …
+% 1 2 3 4
+% %% the following two (or three) values of sigma …
+% E1=canny(‘file_name’,sigma1,th_low,th_high)
+% E2= canny(‘file_name’,sigma2,th_low,th_high)
+% Figure; imshow(E1,[]);
+% title('Using sigma1')
+% Figure; imshow(E2,[]);
+% title('Using sigma2')
+
+
 % set 1
 L_th = 15; H_th = 20; sigmaCanny = 6;
 I_BD_edges = canny(imageName_QBD, sigmaCanny ,L_th, H_th);
