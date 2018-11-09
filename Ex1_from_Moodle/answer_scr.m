@@ -24,13 +24,10 @@ randomPosition = [randi([1 (imageSize(1) - 4)]) randi([1 (imageSize(2) - 4)])]; 
 I_QAa(randomPosition(1) : (randomPosition(1) + (size(convMask_QAa, 1) - 1)), randomPosition(2) : (randomPosition(2) + (size(convMask_QAa, 1) - 1))) = patch; % apply patch on image
 
 % convolve mask and image 
-Iresult_QAa = conv2(I_QAa, convMask_QAa,'same');%TODO -  she asked to use 'same'
+Iresult_QAa = conv2(I_QAa, convMask_QAa,'same');
 
 % find maximal value location (using code!)
 [maxLocation_y, maxLocation_x] = find(Iresult_QAa == max(Iresult_QAa(:)));
-%if we use 'same' there is no need for correction of the location
-%maxLocation_x = maxLocation_x - (size(convMask_QAa, 1) - 1); % rescaling after conv
-%maxLocation_y = maxLocation_y - (size(convMask_QAa, 2) - 1); % rescaling after conv
 
 % show generated image & mark maximal value
 figure();
@@ -53,15 +50,13 @@ title('QAa: convolution results');
 
 I_QAb = I_QA;
 % generate a mask
-convMask_QAb = ones(3) / 9; % TODO - the mask should be 1X9
+convMask_QAb = ones(1, 9) / 9;
 
 % convolve mask and image 
 Iresult_QAb = conv2(I_QAb, convMask_QAb,'same');
 
 % find maximal value location (using code!)
 [maxLocation_y, maxLocation_x] = find(Iresult_QAb == max(Iresult_QAb(:)));
-%maxLocation_x = maxLocation_x - (size(convMask_QAb, 1) - 1); % rescaling after conv
-%maxLocation_y = maxLocation_y - (size(convMask_QAb, 2) - 1); % rescaling after conv
 
 % show generated image & mark maximal value
 figure();
@@ -100,8 +95,6 @@ Iresult_QAc = conv2(I_QAc, convMask_QAc,'same');
 
 % find maximal value location (using code!)
 [maxLocation_y, maxLocation_x] = find(Iresult_QAc == max(Iresult_QAc(:)));
-%maxLocation_x = maxLocation_x - (size(convMask_QAc, 1) - 1); % rescaling after conv
-%maxLocation_y = maxLocation_y - (size(convMask_QAc, 2) - 1); % rescaling after conv
 
 % show generated image & mark maximal value
 figure();
@@ -121,11 +114,7 @@ imshow(Iresult_QAc, []);
 title('QAc: convolution results');
 
 %% section B
-% after you write the functions uncomment and run: ?????
-close all;close all; clc
-file_name = 'Images\Images\Nuns.jpg';
-edges_im = canny(file_name, 3, 10, 18);
-figure(); imshow(edges_im); title('final');
+% after you write the functions uncomment and run:
 
 % Q. BB.
 % generate a synthetic image to test your canny edge detector
@@ -230,12 +219,12 @@ title('QBd: edges on Golf image');
 %%%%%TODO - she wants to document the different paramerters this wey as
 %%%%%explained in the PDF:
 %% C.
-%% The sigma parameter affects the …
-%% This can be demonstrates by running the canny edge detector with …
+%% The sigma parameter affects the ?
+%% This can be demonstrates by running the canny edge detector with ?
 % 1 2 3 4
-% %% the following two (or three) values of sigma …
-% E1=canny(‘file_name’,sigma1,th_low,th_high)
-% E2= canny(‘file_name’,sigma2,th_low,th_high)
+% %% the following two (or three) values of sigma ?
+% E1=canny(?file_name?,sigma1,th_low,th_high)
+% E2= canny(?file_name?,sigma2,th_low,th_high)
 % Figure; imshow(E1,[]);
 % title('Using sigma1')
 % Figure; imshow(E2,[]);

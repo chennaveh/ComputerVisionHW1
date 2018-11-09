@@ -54,7 +54,7 @@ padded = zeros(size_new_im); % pad zero frame
 padded(2:end-1, 2:end-1) = G_strength;
 output = zeros(size(G_strength));
 for i = 2 : size_new_im(1)-1
-    for j = 2 : size_new_im(2)-1%TODO - Doesnt make any sense the assign same value in each output....propbably max value relate to oriendtation
+    for j = 2 : size_new_im(2)-1
         if     (oriented(i-1, j-1) == 0      && padded(i,j) >= padded(i,j+1)   && padded(i,j) >= padded(i,j-1))
             output(i-1,j-1) = G_strength(i-1,j-1);
         elseif (oriented(i-1, j-1) == pi/4   && padded(i,j) >= padded(i-1,j-1) && padded(i,j) >= padded(i+1,j+1))
