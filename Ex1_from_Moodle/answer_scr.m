@@ -293,8 +293,8 @@ end
 
 % please replace val1/2/3/.. with your values
 L_th = [1 15 70];
-H_th = [1 50 90];
-sigma = [1 6 12];
+H_th = [10 50 90];
+sigma = [1 2 3];
 
 % test the values and display the images with the best results.
 %return a marix 81X3 with all results (27 - first pic, 28-54 sec pic, 55+
@@ -334,7 +334,8 @@ for i=1:3
 end
 
 % Q. DL
-th = [50 100 200]; 
+th = [3,14,50]; 
+%th = linspace(1,200,200); 
 %calculate P,R,F for all pictures for all th posibilities
 PRF_results = RunningTests(I_FileNames,I_E_GT,th,[1],[1],'naive','sobel');
 

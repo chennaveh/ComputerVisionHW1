@@ -34,7 +34,7 @@ for t=1:size(I,2)
                     imshow(squeeze(edges), [])
                     title(['lt = ' num2str(L_th(i)) ', ht = ' num2str(H_th(j)) ', \sigma = ' num2str(sigma(k)) ', P = ' num2str(P) ', R = ' num2str(R) ', F = ' num2str(F)])
                 end
-                   %uncomment this of you want to display all images
+                %uncomment this of you want to display all images
 %                 figure (100+t+i)
 %                 subplot(size(sigma,2), size(H_th,2), y);
 %                 imshow(squeeze(edges), [])
