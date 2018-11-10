@@ -5,9 +5,11 @@ function [P,R,F] =evaluate(E,E_GT)
 
 SE = strel('square', 3);
 E_GT_dilate = imdilate(E_GT , SE);
+E = logical(E); %turn the matrix to a logical matrix
 
-P = sum(and(E,E_GT_dilate),'all')/sum(E,'all'); % How many selected items are relevent
-R = sum(and(E,E_GT_dilate),'all')/sum(E_GT_dilate,'all'); % How many relevent items are selected
+numerator = sum(and(E,E_GT_dilate),'all');
+P = numerator /sum(E,'all'); % How many selected items are relevent
+R = numerator /sum(E_GT_dilate,'all'); % How many relevent items are selected
 F =(2*P*R)/(P+R);
 
 

@@ -17,9 +17,9 @@ for t=1:size(I,2)
         for j=1:size(H_th,2)
             for k=1:size(sigma,2)
                 if strcmpi(EdgeDetectorAlgo,'canny')
-                    edges = canny(I{t}, sigma(k) ,L_th(i), H_th(j))>0;
+                    edges = canny(I{t}, sigma(k) ,L_th(i), H_th(j));
                 else
-                    edges = sobel(I{t},L_th(i))>0;
+                    edges = sobel(I{t},L_th(i));
                 end 
                 
                 if strcmpi(Naive,'naive')                   
@@ -32,7 +32,17 @@ for t=1:size(I,2)
                     maxF=F;
                     figure (100+t*9+double(Naive(1)) + double(EdgeDetectorAlgo(1)))
                     imshow(squeeze(edges), [])
-                    title(['lt = ' num2str(L_th(i)) ', ht = ' num2str(H_th(j)) ', \sigma = ' num2str(sigma(k)) ', P = ' num2str(P) ', R = ' num2str(R) ', F = ' num2str(F)])
+                    if sigma(k)==-1
+                        title(['lt = ' num2str(L_th(i)) ', P = ' num2str(P) ', R = ' num2str(R) ', F = ' num2str(F)])
+                    else
+                        if strcmpi(Naive,'naive') 
+                            title(['lt = ' num2str(L_th(i)) ', ht = ' num2str(H_th(j)) ', \sigma = ' num2str(sigma(k)) ', P = ' num2str(P) ', R = ' num2str(R) ', F = ' num2str(F)])
+                        else
+                            title(['with imdilate:lt = ' num2str(L_th(i)) ', ht = ' num2str(H_th(j)) ', \sigma = ' num2str(sigma(k)) ', P = ' num2str(P) ', R = ' num2str(R) ', F = ' num2str(F)])
+                        end
+                        
+                    end
+                    
                 end
                 %uncomment this of you want to display all images
 %                 figure (100+t+i)

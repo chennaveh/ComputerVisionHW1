@@ -265,9 +265,9 @@ clear all;
 clc;
 % Q. CG
 %Picture #1
-imageName_QCG = 'Images/Images/Golf.jpg';
+imageName_QCG = 'Images/Images/Nuns.jpg';
 I(1,:,:) = imread(imageName_QCG);
-imageName_QCG_GT= 'Images/Images/Golf_GT.bmp';
+imageName_QCG_GT= 'Images/Images/Nuns_GT.bmp';
 I_E_GT(1,:,:)=imread(imageName_QCG_GT);
 
 %Picture #2
@@ -277,17 +277,17 @@ imageName_QCG_GT= 'Images/Images/Church_GT.bmp';
 I_E_GT(2,:,:)=imread(imageName_QCG_GT);
 
 %Picture #3
-imageName_QCG = 'Images/Images/Nuns.jpg';
+imageName_QCG = 'Images/Images/Golf.jpg';
 I(3,:,:) = imread(imageName_QCG);
-imageName_QCG_GT= 'Images/Images/Nuns_GT.bmp';
+imageName_QCG_GT= 'Images/Images/Golf_GT.bmp';
 I_E_GT(3,:,:)=imread(imageName_QCG_GT);
 
 I_FileNames = {'Images/Images/Nuns.jpg','Images/Images/Church.jpg','Images/Images/Golf.jpg'};
 x=1;
 figure(99); 
 for i=1:3
-    subplot(2, 3, x); imshow(squeeze(I(i,:,:)), [])
-    subplot(2, 3, x+1); imshow(squeeze(I_E_GT(i,:,:)), [])
+    subplot(2, 3, x); imshow(squeeze(I(i,:,:)), []);title(['Loaded file ' I_FileNames{i}]);
+    subplot(2, 3, x+1); imshow(squeeze(I_E_GT(i,:,:)), []);title(['Its related GT edge detection' I_FileNames{i}]);
     x=x+2;
 end
 
@@ -313,7 +313,7 @@ clear all;
 clc;
 
 %Picture #1
-imageName_QCG_GT= 'Images/Images/Golf_GT.bmp';
+imageName_QCG_GT= 'Images/Images/Nuns_GT.bmp';
 I_E_GT(1,:,:)=imread(imageName_QCG_GT);
 
 %Picture #2
@@ -321,8 +321,9 @@ imageName_QCG_GT= 'Images/Images/Church_GT.bmp';
 I_E_GT(2,:,:)=imread(imageName_QCG_GT);
 
 %Picture #3
-imageName_QCG_GT= 'Images/Images/Nuns_GT.bmp';
+imageName_QCG_GT= 'Images/Images/Golf_GT.bmp';
 I_E_GT(3,:,:)=imread(imageName_QCG_GT);
+
 
 I_FileNames = {'Images/Images/Nuns.jpg','Images/Images/Church.jpg','Images/Images/Golf.jpg'};
 
@@ -330,14 +331,14 @@ I_FileNames = {'Images/Images/Nuns.jpg','Images/Images/Church.jpg','Images/Image
 for i=1:3
     edges = sobel(I_FileNames{i},50);
     figure(i)
-    imshow(edges)
+    imshow(edges);title(['Sobel Q.DJ: with th=50 on ' I_FileNames{i}])
 end
 
 % Q. DL
 th = [3,14,50]; 
-%th = linspace(1,200,200); 
+
 %calculate P,R,F for all pictures for all th posibilities
-PRF_results = RunningTests(I_FileNames,I_E_GT,th,[1],[1],'naive','sobel');
+PRF_results = RunningTests(I_FileNames,I_E_GT,th,[-1],[-1],'naive','sobel');
 
 
 
