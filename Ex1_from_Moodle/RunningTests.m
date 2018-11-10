@@ -8,18 +8,18 @@ function [PRF_results] = RunningTests(I,I_E_GD,L_th,H_th,sigma,Naive,EdgeDetecto
 
 x=1;
 y=1;
-PRF_results = zeros(size(L_th,2)*size(H_th,2)*size(sigma,2),3); %init a matrix (Num_Possibilits, 3)
+PRF_results = zeros(size(L_th,2)*size(H_th,2)*size(sigma,2),6); %init a matrix (Num_Possibilits, 3)
 %collecting results on all posibilities
 for t=1:size(I,2)
-    maxF = 1;
+    maxF = 0;
     for i=1:size(L_th,2)
         y=1;
         for j=1:size(H_th,2)
             for k=1:size(sigma,2)
                 if strcmpi(EdgeDetectorAlgo,'canny')
-                    edges = canny(I{t}, sigma(k) ,L_th(i), H_th(j));
+                    edges = canny(I{t}, sigma(k) ,L_th(i), H_th(j))>0;
                 else
-                    edges = sobel(I{t},L_th(i));
+                    edges = sobel(I{t},L_th(i))>0;
                 end 
                 
                 if strcmpi(Naive,'naive')                   
@@ -27,7 +27,7 @@ for t=1:size(I,2)
                 else
                     [P,R,F]= evaluate(edges,squeeze(I_E_GD(t,:,:))); 
                 end
-                PRF_results(x,:) = [P,R,F];
+                PRF_results(x,:) = [P,R,F,L_th(i),H_th(j),sigma(k)];
                 if F > maxF
                     maxF=F;
                     figure (100+t*9+double(Naive(1)) + double(EdgeDetectorAlgo(1)))
