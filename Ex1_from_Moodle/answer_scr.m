@@ -24,13 +24,10 @@ randomPosition = [randi([1 (imageSize(1) - 4)]) randi([1 (imageSize(2) - 4)])]; 
 I_QAa(randomPosition(1) : (randomPosition(1) + (size(convMask_QAa, 1) - 1)), randomPosition(2) : (randomPosition(2) + (size(convMask_QAa, 1) - 1))) = patch; % apply patch on image
 
 % convolve mask and image 
-Iresult_QAa = conv2(I_QAa, convMask_QAa,'same');%TODO -  she asked to use 'same'
+Iresult_QAa = conv2(I_QAa, convMask_QAa,'same');
 
 % find maximal value location (using code!)
 [maxLocation_y, maxLocation_x] = find(Iresult_QAa == max(Iresult_QAa(:)));
-%if we use 'same' there is no need for correction of the location
-%maxLocation_x = maxLocation_x - (size(convMask_QAa, 1) - 1); % rescaling after conv
-%maxLocation_y = maxLocation_y - (size(convMask_QAa, 2) - 1); % rescaling after conv
 
 % show generated image & mark maximal value
 figure();
@@ -53,15 +50,13 @@ title('QAa: convolution results');
 
 I_QAb = I_QA;
 % generate a mask
-convMask_QAb = ones(3) / 9; % TODO - the mask should be 1X9
+convMask_QAb = ones(1, 9) / 9;
 
 % convolve mask and image 
 Iresult_QAb = conv2(I_QAb, convMask_QAb,'same');
 
 % find maximal value location (using code!)
 [maxLocation_y, maxLocation_x] = find(Iresult_QAb == max(Iresult_QAb(:)));
-%maxLocation_x = maxLocation_x - (size(convMask_QAb, 1) - 1); % rescaling after conv
-%maxLocation_y = maxLocation_y - (size(convMask_QAb, 2) - 1); % rescaling after conv
 
 % show generated image & mark maximal value
 figure();
@@ -100,8 +95,6 @@ Iresult_QAc = conv2(I_QAc, convMask_QAc,'same');
 
 % find maximal value location (using code!)
 [maxLocation_y, maxLocation_x] = find(Iresult_QAc == max(Iresult_QAc(:)));
-%maxLocation_x = maxLocation_x - (size(convMask_QAc, 1) - 1); % rescaling after conv
-%maxLocation_y = maxLocation_y - (size(convMask_QAc, 2) - 1); % rescaling after conv
 
 % show generated image & mark maximal value
 figure();
@@ -121,11 +114,7 @@ imshow(Iresult_QAc, []);
 title('QAc: convolution results');
 
 %% section B
-% after you write the functions uncomment and run: ?????
-close all;close all; clc
-file_name = 'Images\Images\Nuns.jpg';
-edges_im = canny(file_name, 3, 10, 18);
-figure(); imshow(edges_im); title('final');
+% after you write the functions uncomment and run:
 
 % Q. BB.
 % generate a synthetic image to test your canny edge detector
@@ -225,47 +214,51 @@ subplot(2, 3, 1);
 imshow(I_BD, []);
 title('QBd: edges on Golf image');
 
+%{
+The sigma parameter affects the size of the window for computing the derivatives.
+Low values generate thinner lines while be more subject to noise.
+Higher values can detect blurred changes but will be more susceptible to higher frequencies.
+This can be shown in [set 1, set 2] which detect the thick sky line.
+In set 1 we can see some of the border on the right side, while in set 2
+we can fully detect it. On the other hand we loose much of the accuracy
+and high frequencies and get a distorted image.
 
+The H_th is in charge for the pixel?s threshold. 
+High values mean finer changes while low values will generate darker image with only the major frequencies.
+We can notice this change in [set 4, set 5]. In set 5 we get a more ditailed 
+image. We can see the fence and the vegetation behind it which can't be
+seen in set 4.
 
-%%%%%TODO - she wants to document the different paramerters this wey as
-%%%%%explained in the PDF:
-%% C.
-%% The sigma parameter affects the …
-%% This can be demonstrates by running the canny edge detector with …
-% 1 2 3 4
-% %% the following two (or three) values of sigma …
-% E1=canny(‘file_name’,sigma1,th_low,th_high)
-% E2= canny(‘file_name’,sigma2,th_low,th_high)
-% Figure; imshow(E1,[]);
-% title('Using sigma1')
-% Figure; imshow(E2,[]);
-% title('Using sigma2')
-
-
-% set 1
+The L_th is in charge for the thresholding the pixels around those with high values. 
+Basically, lower values of L_th will generate images with less holes and more continuous lines, 
+while higher values will give more control to H_th and will not affect the image.
+We can notice those changes in [set 3, set 4] which differ only in this
+parameter. In set 4 we get less holes in a continiuous line. This can be
+seen if we zoom in and take a good look at the man's hat.
+%}
 L_th = 15; H_th = 20; sigmaCanny = 6;
 I_BD_edges = canny(imageName_QBD, sigmaCanny ,L_th, H_th);
-subplot(2, 3, 2); imshow(I_BD_edges, []); title(['Lth = ' num2str(L_th) ', Hth = ' num2str(H_th) ', \sigma = ' num2str(sigmaCanny)]);
+subplot(2, 3, 2); imshow(I_BD_edges, []); title(['Set 1: Lth = ' num2str(L_th) ', Hth = ' num2str(H_th) ', \sigma = ' num2str(sigmaCanny)]);
 
 % set 2
 L_th = 15; H_th = 20; sigmaCanny = 12;
 I_BD_edges = canny(imageName_QBD, sigmaCanny ,L_th, H_th);
-subplot(2, 3, 3); imshow(I_BD_edges, []); title(['Lth = ' num2str(L_th) ', Hth = ' num2str(H_th) ', \sigma = ' num2str(sigmaCanny)]);
+subplot(2, 3, 3); imshow(I_BD_edges, []); title(['Set 2: Lth = ' num2str(L_th) ', Hth = ' num2str(H_th) ', \sigma = ' num2str(sigmaCanny)]);
 
 % set 3
-L_th = 70; H_th = 60; sigmaCanny = 1;
+L_th = 58; H_th = 60; sigmaCanny = 1;
 I_BD_edges = canny(imageName_QBD, sigmaCanny ,L_th, H_th);
-subplot(2, 3, 4); imshow(I_BD_edges, []); title(['Lth = ' num2str(L_th) ', Hth = ' num2str(H_th) ', \sigma = ' num2str(sigmaCanny)]);
+subplot(2, 3, 4); imshow(I_BD_edges, []); title(['Set 3: Lth = ' num2str(L_th) ', Hth = ' num2str(H_th) ', \sigma = ' num2str(sigmaCanny)]);
 
 % set 4
 L_th = 1; H_th = 60; sigmaCanny = 1;
 I_BD_edges = canny(imageName_QBD, sigmaCanny ,L_th, H_th);
-subplot(2, 3, 5); imshow(I_BD_edges, []); title(['Lth = ' num2str(L_th) ', Hth = ' num2str(H_th) ', \sigma = ' num2str(sigmaCanny)]);
+subplot(2, 3, 5); imshow(I_BD_edges, []); title(['Set 4: Lth = ' num2str(L_th) ', Hth = ' num2str(H_th) ', \sigma = ' num2str(sigmaCanny)]);
 
 % set 5
 L_th = 1; H_th = 20; sigmaCanny = 1;
 I_BD_edges = canny(imageName_QBD, sigmaCanny ,L_th, H_th);
-subplot(2, 3, 6); imshow(I_BD_edges, []); title(['Lth = ' num2str(L_th) ', Hth = ' num2str(H_th) ', \sigma = ' num2str(sigmaCanny)]);
+subplot(2, 3, 6); imshow(I_BD_edges, []); title(['Set 5: Lth = ' num2str(L_th) ', Hth = ' num2str(H_th) ', \sigma = ' num2str(sigmaCanny)]);
 
 %% section C
 clear all;
